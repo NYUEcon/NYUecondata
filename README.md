@@ -1,4 +1,7 @@
 NYUecondata
 ===========
 
-This is a repository for handling certain datasets and doing simple plots.  Supervised by Dave Backus
+This is a repository for handling certain datasets and doing simple plots.  Supervised by Dave Backus, Chase Coleman, and Spencer Lyon.
+
+
+ #nyuecon
