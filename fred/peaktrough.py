@@ -66,24 +66,17 @@ def manhandle_freddata(fred_series, nperiods=40,
     chopped_data = chopseries(fred_data, rec_startind, periods=nperiods)
 
     if changetype=="Percent":
-        chopped_change = ((chopped / chopped.iloc[0] - 1)*100)
+        chopped_change = ((chopped_data / chopped_data.iloc[0] - 1)*100)
     elif changetype=="Log":
-        chopped_change = np.log(chopped).diff()
+        chopped_change = np.log(chopped_data).diff()
 
-    fig = plt.figure()
     chopped_change.plot()
     plt.show()
 
     return chopped_change
 
-
-manhandle_freddata("GDPC1")
-
-# chopped = chopseries(data["GDPC1"], rec_startind)
-
-
-
 # Get Real GDP, Real Personal Consumption, Nonresidential Investment,
 # and Output per Hour from FRED
-# fred_names = ["GDPC1", "PCECC96", "GPDIC96", "OPHNFB"]
-# data = DataReader(fred_names, "fred", "01/01/1972")
+fred_names = ["GDPC1", "PCECC96", "GPDIC96", "OPHNFB"]
+
+gdpdiff, pceccdiff, gpdicdiff, ophnfbdiff = map(manhandle_freddata, fred_names)
