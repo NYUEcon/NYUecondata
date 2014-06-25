@@ -85,20 +85,23 @@ def manhandle_freddata(fred_series, nperiods=40,
 
     # Compute percent changes.
     if changetype.lower() == "percent":
-        chopped_change = ((chopped_data / chopped_data.iloc[0] - 1)*100)
+        pct_change = ((chopped_data / chopped_data.iloc[0] - 1)*100)
     elif changetype.lower() == "log":
         logged = np.log(chopped_data)
-        chopped_change = (logged - logged.iloc[0]) * 100.0
+        pct_change = (logged - logged.iloc[0]) * 100.0
 
+    # plot data
     fig, (ax) = plt.subplots(1, 1)
     ax.set_ylabel("Percent change since previous peak")
-    chopped_change.index.name = "Quarters since previous peak"
-    chopped_change.plot(ax=ax, **plot_kwargs)
-    ax.legend_.set_title(fred_series)
+    pct_change.index.name = "Quarters since previous peak"  # becomes x_label
+    pct_change.plot(ax=ax, **plot_kwargs)
+    ax.legend_.set_title(fred_series)  # set title on legend
+
+    # add line for x-axis and show the plot.
     ax.axhline(y=0, xmin=0, xmax=nperiods, color='k', linewidth=1.5)
     plt.show()
 
-    return chopped_change
+    return pct_change
 
 
 if __name__ == '__main__':
