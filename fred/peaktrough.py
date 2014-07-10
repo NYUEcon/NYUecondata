@@ -1,8 +1,20 @@
 """
+Cooley-Rupert-style business cycle figures for Backus-Ferriere-Zin paper, 
+"Risk and ambiguity in models of business cycles,"  Carnegie-Rochester-NYU 
+conference paper, April 2014.
+
+FRED codes:  ["GDPC1", "PCECC96", "GPDIC96", "OPHNFB"]
+(gdp, consumption, investment, labor productivity)
+
+Cooley-Rupert link:  http://econsnapshot.com/
+Paper link:  http://pages.stern.nyu.edu/~dbackus/BFZ/ms/BFZ_CRN_latest.pdf
+
 Authors: Chase Coleman and Spencer Lyon
 Date: 06/24/2014
 
 TODO: Add labels to the plots
+* Increase thickness of current recession
+* Smaller fonts in legend
 """
 from datetime import datetime
 import pandas as pd
@@ -168,7 +180,7 @@ def manhandle_freddata(fred_series, nperiods=40,
 
     # plot data
     fig, (ax) = plt.subplots(1, 1)
-    ax.set_ylabel("Percent change since previous peak")
+    ax.set_ylabel("Percent change from previous peak")
     pct_change.index.name = "Quarters since previous peak"  # becomes x_label
     pct_change.plot(ax=ax, **plot_kwargs)
     ax.legend_.set_title(fred_series)  # set title on legend
