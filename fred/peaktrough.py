@@ -96,8 +96,8 @@ def peak_begin_dates(start="01/01/1972", end=datetime.now()):
 
 
 def manhandle_freddata(fred_series, nperiods=40,
-                       changetype="Percent", start="01/01/1972",
-                       **plot_kwargs):
+                       changetype="log", start="01/01/1972",
+                       saveshow="show", **plot_kwargs):
     """
     This function takes a string that corresponds to a data series from
     FRED and creates a DataFrame that takes this series and creates a
@@ -175,7 +175,12 @@ def manhandle_freddata(fred_series, nperiods=40,
 
     # add line for x-axis and show the plot.
     ax.axhline(y=0, xmin=0, xmax=nperiods, color='k', linewidth=1.5)
-    plt.show()
+    
+    if saveshow=="save":
+        fn = fred_series + ".pdf"
+        plt.savefig(fn)
+    else:
+        plt.show()
 
     return pct_change
 
