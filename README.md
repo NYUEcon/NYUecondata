@@ -6,4 +6,4 @@ Repository for Python code to read in (mostly) macroeconomic data and process it
 Project managed by Chase Coleman and Spencer Lyon with random input from Dave Backus.  If you have comments or questions, feel free to email us at NYU.  
 
 
-#nyuecon
+ #nyuecon
