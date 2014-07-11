@@ -13,8 +13,9 @@ Authors: Chase Coleman and Spencer Lyon
 Date: 06/24/2014
 
 TODO: Add labels to the plots
-* Increase thickness of current recession
-* Smaller fonts in legend
+    Increase thickness of current recession
+    Smaller fonts in legend 
+    Identify FRED code?
 """
 from datetime import datetime
 import pandas as pd
@@ -22,10 +23,17 @@ import numpy as np
 import matplotlib.pyplot as plt
 from pandas.io.data import DataReader
 
+# legend control, subject to change 
+# http://stackoverflow.com/questions/7125009/how-to-change-legend-size-with-matplotlib-pyplot
+params = {'legend.fontsize': 8,
+          'legend.linewidth': 1}  # this one doesn't seem to do anything 
+plt.rcParams.update(params)
+
 
 def chopseries(data, indices, periods=40):
     """
-    Takes a series and turns it into a data frame starting at each index
+    Takes a series and chops it into pieces starting with cyclical peaks.
+    Formally, it turns it into a data frame starting at each peak index date
     and running for the number of periods specified (default is 40)
 
     Parameters
@@ -109,7 +117,7 @@ def peak_begin_dates(start="01/01/1972", end=datetime.now()):
 
 def manhandle_freddata(fred_series, nperiods=40,
                        changetype="log", start="01/01/1972",
-                       saveshow="show", **plot_kwargs):
+                       saveshow="save", **plot_kwargs):
     """
     This function takes a string that corresponds to a data series from
     FRED and creates a DataFrame that takes this series and creates a
@@ -184,10 +192,12 @@ def manhandle_freddata(fred_series, nperiods=40,
     pct_change.index.name = "Quarters since previous peak"  # becomes x_label
     pct_change.plot(ax=ax, **plot_kwargs)
     ax.legend_.set_title(fred_series)  # set title on legend
+    #ax.legend_.set_title("FRED Code" + fred_series)  # set title on legend
 
     # add line for x-axis and show the plot.
     ax.axhline(y=0, xmin=0, xmax=nperiods, color='k', linewidth=1.5)
     
+    # if saveshow="save" save plot as pdf file with name = FRED code 
     if saveshow=="save":
         fn = fred_series + ".pdf"
         plt.savefig(fn)
@@ -204,3 +214,5 @@ if __name__ == '__main__':
 
     # gdpdiff, pceccdiff, gpdicdiff, ophnfbdiff = map(manhandle_freddata,
     #                                                   fred_names)
+test = manhandle_freddata("GDPC1", saveshow="show")
+test = manhandle_freddata("GDPC1", saveshow="save")
