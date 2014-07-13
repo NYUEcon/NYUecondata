@@ -117,7 +117,7 @@ def peak_begin_dates(start="01/01/1972", end=datetime.now()):
 
 def manhandle_freddata(fred_series, nperiods=40,
                        changetype="log", start="01/01/1972",
-                       saveshow="save", **plot_kwargs):
+                       saveshow="show", **plot_kwargs):
     """
     This function takes a string that corresponds to a data series from
     FRED and creates a DataFrame that takes this series and creates a
@@ -165,7 +165,7 @@ def manhandle_freddata(fred_series, nperiods=40,
 
     Examples
     --------
-    >>> rgdp = manhandle_freddata('GDPC1')  # Real GDP. Produces plot
+    >>> rgdp = manhandle_freddata('GDPC1')  # produces real GDP plot 
 
     For more examples see the `examples.ipynb` notebook in this
     directory.
@@ -186,20 +186,19 @@ def manhandle_freddata(fred_series, nperiods=40,
         logged = np.log(chopped_data)
         pct_change = (logged - logged.iloc[0]) * 100.0
 
-    # plot data
+    # plot data 
     fig, (ax) = plt.subplots(1, 1)
     ax.set_ylabel("Percent change from previous peak")
     pct_change.index.name = "Quarters since previous peak"  # becomes x_label
     pct_change.plot(ax=ax, **plot_kwargs)
-    ax.legend_.set_title(fred_series)  # set title on legend
-    #ax.legend_.set_title("FRED Code" + fred_series)  # set title on legend
+    ax.legend_.set_title("Code: " + fred_series)  # set title on legend
 
     # add line for x-axis and show the plot.
     ax.axhline(y=0, xmin=0, xmax=nperiods, color='k', linewidth=1.5)
     
     # if saveshow="save" save plot as pdf file with name = FRED code 
     if saveshow=="save":
-        fn = fred_series + ".pdf"
+        fn = fred_series + "_BFZ.pdf"
         plt.savefig(fn)
     else:
         plt.show()
@@ -214,5 +213,9 @@ if __name__ == '__main__':
 
     # gdpdiff, pceccdiff, gpdicdiff, ophnfbdiff = map(manhandle_freddata,
     #                                                   fred_names)
+
+"""
+Examples 
 test = manhandle_freddata("GDPC1", saveshow="show")
 test = manhandle_freddata("GDPC1", saveshow="save")
+"""
