@@ -8,6 +8,7 @@ FRED codes:  ["GDPC1", "PCECC96", "GPDIC96", "OPHNFB"]
 
 Cooley-Rupert link:  http://econsnapshot.com/
 Paper link:  http://pages.stern.nyu.edu/~dbackus/BFZ/ms/BFZ_CRN_latest.pdf
+GitHub:  https://github.com/cc7768/NYUecondata/tree/master/fred
 
 Authors: Chase Coleman and Spencer Lyon
 Date: 06/24/2014
@@ -16,6 +17,7 @@ TODO: Add labels to the plots
     Increase thickness of current recession
     Smaller fonts in legend 
     Identify FRED code?
+    Check margins:  http://matplotlib.org/api/pyplot_api.html#matplotlib.pyplot.tight_layout
 """
 from datetime import datetime
 import pandas as pd
