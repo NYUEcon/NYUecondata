@@ -25,8 +25,8 @@ from pandas.io.data import DataReader
 
 # legend control, subject to change 
 # http://stackoverflow.com/questions/7125009/how-to-change-legend-size-with-matplotlib-pyplot
-params = {'legend.fontsize': 8,
-          'legend.linewidth': 1}  # this one doesn't seem to do anything 
+params = {'legend.fontsize': 10,
+          'legend.linewidth': 0.5}  # this one doesn't seem to do anything 
 plt.rcParams.update(params)
 
 
@@ -130,7 +130,7 @@ def manhandle_freddata(fred_series, nperiods=40,
 
     If you would like to use multiple series, use python's map function:
 
-        map(manhandle_freddata, [list of fred_series])
+        map(manhandle_freddata, [list of fred_series])  
 
     Parameters
     ----------
@@ -191,14 +191,14 @@ def manhandle_freddata(fred_series, nperiods=40,
     ax.set_ylabel("Percent change from previous peak")
     pct_change.index.name = "Quarters since previous peak"  # becomes x_label
     pct_change.plot(ax=ax, **plot_kwargs)
-    ax.legend_.set_title("Code: " + fred_series)  # set title on legend
+    ax.legend_.set_title("FRED: " + fred_series)  # set title on legend
 
     # add line for x-axis and show the plot.
     ax.axhline(y=0, xmin=0, xmax=nperiods, color='k', linewidth=1.5)
     
     # if saveshow="save" save plot as pdf file with name = FRED code 
     if saveshow=="save":
-        fn = fred_series + "_BFZ.pdf"
+        fn =  "BFZ_" + fred_series + ".pdf"
         plt.savefig(fn)
     else:
         plt.show()
@@ -216,6 +216,6 @@ if __name__ == '__main__':
 
 """
 Examples 
-test = manhandle_freddata("GDPC1", saveshow="show")
-test = manhandle_freddata("GDPC1", saveshow="save")
+manhandle_freddata("GDPC1", saveshow="show")
+manhandle_freddata("GDPC1", saveshow="save")
 """
