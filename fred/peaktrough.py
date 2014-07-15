@@ -1,6 +1,6 @@
 """
-Cooley-Rupert-style business cycle figures for Backus-Ferriere-Zin paper, 
-"Risk and ambiguity in models of business cycles,"  Carnegie-Rochester-NYU 
+Cooley-Rupert-style business cycle figures for Backus-Ferriere-Zin paper,
+"Risk and ambiguity in models of business cycles,"  Carnegie-Rochester-NYU
 conference paper, April 2014.
 
 FRED codes:  ["GDPC1", "PCECC96", "GPDIC96", "OPHNFB"]
@@ -14,7 +14,7 @@ Date: 06/24/2014
 
 TODO: Add labels to the plots
     Increase thickness of current recession
-    Smaller fonts in legend 
+    Smaller fonts in legend
     Identify FRED code?
 """
 from datetime import datetime
@@ -23,10 +23,10 @@ import numpy as np
 import matplotlib.pyplot as plt
 from pandas.io.data import DataReader
 
-# legend control, subject to change 
+# legend control, subject to change
 # http://stackoverflow.com/questions/7125009/how-to-change-legend-size-with-matplotlib-pyplot
 params = {'legend.fontsize': 8,
-          'legend.linewidth': 1}  # this one doesn't seem to do anything 
+          'legend.linewidth': 1}  # this one doesn't seem to do anything
 plt.rcParams.update(params)
 
 
@@ -152,6 +152,11 @@ def manhandle_freddata(fred_series, nperiods=40,
         obtain the data set and to `peak_begin_dates` to determine
         starting periods for business cycle peaks
 
+    saveshow : string, optional(default="save")
+        A string specifying whether the plots should be saved to disk or
+        shown. Optional parameter, default is to save them. Acceptable
+        values are "save", "show", and "both".
+
     plot_kwargs : other
         Other keyword arguments that will be passed directly to the
         `pd.DataFrame.plot` method when generating the plot. See pandas
@@ -196,12 +201,12 @@ def manhandle_freddata(fred_series, nperiods=40,
 
     # add line for x-axis and show the plot.
     ax.axhline(y=0, xmin=0, xmax=nperiods, color='k', linewidth=1.5)
-    
-    # if saveshow="save" save plot as pdf file with name = FRED code 
-    if saveshow=="save":
+
+    # if saveshow="save" save plot as pdf file with name = FRED code
+    if saveshow=="save" or saveshow=="both":
         fn = fred_series + ".pdf"
         plt.savefig(fn)
-    else:
+    if saveshow=="show" or saveshow="both":
         plt.show()
 
     return pct_change
@@ -214,5 +219,5 @@ if __name__ == '__main__':
 
     # gdpdiff, pceccdiff, gpdicdiff, ophnfbdiff = map(manhandle_freddata,
     #                                                   fred_names)
-test = manhandle_freddata("GDPC1", saveshow="show")
-test = manhandle_freddata("GDPC1", saveshow="save")
+    test = manhandle_freddata("GDPC1", saveshow="show")
+    test = manhandle_freddata("GDPC1", saveshow="save")
