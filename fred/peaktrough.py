@@ -8,6 +8,7 @@ FRED codes:  ["GDPC1", "PCECC96", "GPDIC96", "OPHNFB"]
 
 Cooley-Rupert link:  http://econsnapshot.com/
 Paper link:  http://pages.stern.nyu.edu/~dbackus/BFZ/ms/BFZ_CRN_latest.pdf
+GitHub:  https://github.com/cc7768/NYUecondata/tree/master/fred
 
 Authors: Chase Coleman and Spencer Lyon
 Date: 06/24/2014
@@ -16,6 +17,7 @@ TODO: Add labels to the plots
     Increase thickness of current recession
     Smaller fonts in legend
     Identify FRED code?
+    Check margins:  http://matplotlib.org/api/pyplot_api.html#matplotlib.pyplot.tight_layout
 """
 from datetime import datetime
 import pandas as pd
@@ -25,8 +27,8 @@ from pandas.io.data import DataReader
 
 # legend control, subject to change
 # http://stackoverflow.com/questions/7125009/how-to-change-legend-size-with-matplotlib-pyplot
-params = {'legend.fontsize': 8,
-          'legend.linewidth': 1}  # this one doesn't seem to do anything
+params = {'legend.fontsize': 10,
+          'legend.linewidth': 0.5}  # this one doesn't seem to do anything
 plt.rcParams.update(params)
 
 
@@ -117,7 +119,7 @@ def peak_begin_dates(start="01/01/1972", end=datetime.now()):
 
 def manhandle_freddata(fred_series, nperiods=40,
                        changetype="log", start="01/01/1972",
-                       saveshow="save", **plot_kwargs):
+                       saveshow="show", **plot_kwargs):
     """
     This function takes a string that corresponds to a data series from
     FRED and creates a DataFrame that takes this series and creates a
@@ -170,7 +172,7 @@ def manhandle_freddata(fred_series, nperiods=40,
 
     Examples
     --------
-    >>> rgdp = manhandle_freddata('GDPC1')  # Real GDP. Produces plot
+    >>> rgdp = manhandle_freddata('GDPC1')  # produces real GDP plot
 
     For more examples see the `examples.ipynb` notebook in this
     directory.
@@ -196,8 +198,7 @@ def manhandle_freddata(fred_series, nperiods=40,
     ax.set_ylabel("Percent change from previous peak")
     pct_change.index.name = "Quarters since previous peak"  # becomes x_label
     pct_change.plot(ax=ax, **plot_kwargs)
-    ax.legend_.set_title(fred_series)  # set title on legend
-    #ax.legend_.set_title("FRED Code" + fred_series)  # set title on legend
+    ax.legend_.set_title("FRED: " + fred_series)  # set title on legend
 
     # add line for x-axis and show the plot.
     ax.axhline(y=0, xmin=0, xmax=nperiods, color='k', linewidth=1.5)
@@ -206,7 +207,7 @@ def manhandle_freddata(fred_series, nperiods=40,
     if saveshow=="save" or saveshow=="both":
         fn = fred_series + ".pdf"
         plt.savefig(fn)
-    if saveshow=="show" or saveshow="both":
+    if saveshow=="show" or saveshow=="both":
         plt.show()
 
     return pct_change
